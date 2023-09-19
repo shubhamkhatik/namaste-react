@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { FETCH_MENU_URL ,FETCH_MENU_URL_NGP} from "../utils/Constant";
+import { FETCH_MENU_URL, FETCH_MENU_URL_NGP } from "../utils/Constant";
 
 const useRestaurant = (resId) => {
   const [restaurant, setRestauraunt] = useState(null);
 
   useEffect(() => {
     getRestaurantInfo();
+    console.log("custom hook useeffecteffect")
   }, []);
 
   async function getRestaurantInfo() {
@@ -13,6 +14,8 @@ const useRestaurant = (resId) => {
     // const data = await fetch(FETCH_MENU_URL + resId);
     const json = await data.json();
     setRestauraunt(json.data);
+  
+
   }
 
   return restaurant;

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { filterData } from "../utils/helper";
 import useOnline from "../utils/useOnline";
 import UserContext from "../utils/UserContext";
-import {SWIGGY_API_NGP} from "../utils/Constant"
+import { SWIGGY_API_NGP } from "../utils/Constant";
 
 const Body = () => {
   const [allRestaurants, setAllRestaurants] = useState([]);
@@ -19,15 +19,18 @@ const Body = () => {
   }, []);
 
   async function getRestaurants() {
-    const akshay_API = 
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9351929&lng=77.62448069999999&page_type=DESKTOP_WEB_LISTING"
-     
-    const data = await fetch(
-      SWIGGY_API_NGP
-    );
+    const akshay_API =
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9351929&lng=77.62448069999999&page_type=DESKTOP_WEB_LISTING";
+
+    const data = await fetch(SWIGGY_API_NGP);
     const json = await data.json();
-    setAllRestaurants(json?.data?.cards[2]?.data?.data?.cards);
-    setFilteredRestaurants(json?.data?.cards[2]?.data?.data?.cards);
+
+    setAllRestaurants(
+      json.data.cards[5].card.card.gridElements.infoWithStyle.restaurants
+    );
+    setFilteredRestaurants(
+      json.data.cards[5].card.card.gridElements.infoWithStyle.restaurants
+    );
   }
   if (!allRestaurants) return null;
 
@@ -82,10 +85,10 @@ const Body = () => {
         {filteredRestaurants.map((restaurant) => {
           return (
             <Link
-              to={"/restaurant/" + restaurant.data.id}
-              key={restaurant.data.id}
+              to={"/restaurant/" + restaurant.info.id}
+              key={restaurant.info.id}
             >
-              <RestaurantCard {...restaurant.data} />
+              <RestaurantCard {...restaurant.info} />
             </Link>
           );
         })}

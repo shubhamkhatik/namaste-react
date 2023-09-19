@@ -15,7 +15,7 @@ class Profile extends React.Component {
 
   componentDidMount() {
     this.timer = setInterval(() => {
-      console.log("NAMASTE REACT OP ");
+      // console.log("NAMASTE REACT OP ");
     }, 1000);
 
     //console.log("Child - componentDidMount");

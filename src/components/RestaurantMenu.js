@@ -10,7 +10,7 @@ const RestaurantMenu = () => {
   const { resId } = useParams();
 
   const restaurant = useRestaurant(resId);
-  console.log("menu daya",restaurant);
+  console.log("menu", restaurant);
 
   const dispatch = useDispatch();
 
@@ -22,30 +22,52 @@ const RestaurantMenu = () => {
     <Shimmer />
   ) : (
     <div className="flex">
+      {console.log("component")}
       <div>
         <h1>Restraunt id: {resId}</h1>
-        <h2>{restaurant?.name}</h2>
-        <img src={IMG_CDN_URL + restaurant?.cloudinaryImageId} />
-        <h3>{restaurant?.area}</h3>
-        <h3>{restaurant?.city}</h3>
-        <h3>{restaurant?.avgRating} stars</h3>
-        <h3>{restaurant?.costForTwoMsg}</h3>
+        <h2>{restaurant?.cards[0].card.card.info.name}</h2>
+        <img
+          src={
+            IMG_CDN_URL + restaurant?.cards[0].card.card.info.cloudinaryImageId
+          }
+        />
+        <h3>{restaurant?.cards[0].card.card.info.area}</h3>
+        <h3>{restaurant?.cards[0].card.card.info.city}</h3>
+        <h3>{restaurant?.cards[0].card.card.info.avgRating} stars</h3>
+        <h3>{restaurant?.cards[0].card.card.info.costForTwoMsg}</h3>
       </div>
       <div className="p-5">
         <h1>Menu</h1>
+        <h3>hello</h3>
+        {/* <div>
+          {restaurant.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[5]?.card?.card?.itemCards.map(
+            (item) => {
+              return <div>{item?.card?.info?.name}</div>;
+            }
+          )}
+        </div> */}
+
         <ul data-testid="menu">
-          {Object.values(restaurant?.menu?.items).map((item) => (
-            <li key={item.id}>
-              {item.name} -{" "}
-              <button
-                data-testid="addBtn"
-                className="p-1 bg-green-50"
-                onClick={() => addFoodItem(item)}
-              >
-                Add
-              </button>
-            </li>
-          ))}
+          {restaurant.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[5]?.card?.card?.itemCards.map(
+            (item) => {
+              return (
+                <li key={item?.card?.info?.id}>
+                  <p>
+                    {item?.card?.info?.name} - {item?.card?.info?.category} -{" "}
+                    {item?.card?.info?.price} -{" "}
+                  </p>
+
+                  <button
+                    data-testid="addBtn"
+                    className="p-1 bg-green-50"
+                    onClick={() => addFoodItem(item?.card?.info)}
+                  >
+                    Add
+                  </button>
+                </li>
+              );
+            }
+          )}
         </ul>
       </div>
     </div>
